@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vonix PS</title>
+    <link rel="shortcut icon" href="https://files.catbox.moe/qc4knm.jpg" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://files.catbox.moe/qc4knm.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link rel="stylesheet" href="vonix.css">
+</head>
+<body>
+
+    <div class="loader-wrapper" id="loader">
+        <div class="loader">
+            <img src="https://files.catbox.moe/qc4knm.jpg" alt="Vonix PS Logo" class="loader-logo">
+            <div class="loader-text">Welcome To Vonix PS</div>
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+    <div class="shooting-stars" id="shootingStars"></div>
+    <div id="particles-js"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="theme-switch" id="theme-toggle">
+        <i class="fas fa-sun"></i>
+    </div>
+    
+    <div class="video-background">
+        <video id="background-video" autoplay muted playsinline></video>
+    </div>
+
+    <div class="container">
+        <div class="profile" data-aos="fade-down" data-aos-duration="1000">
+            <div class="profile-img-container">
+                <img src="https://files.catbox.moe/qc4knm.jpg" alt="Vonix PS Logo">
+            </div>
+            <h1>@VonixPS</h1>
+            <p><b>AYO BERGABUNG DI SERVER VONIX PS <br> DAN RAMAIKAN SERVER VONIX PS</p></b>
+        </div>
+        
+        <div class="links" id="linksContainer">
+            <a href="https://download.gtpshost.com/VonisPS-G" class="link" data-tilt data-tilt-glare data-tilt-max-glare="0.3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <img src="https://files.catbox.moe/qc4knm.jpg" alt="Vonix PS Logo">
+                <span>VHOST & HOSTGO</span>
+            </a>
+            
+            <a href="https://gtpshost.com/VonisPS-G.txt" class="link" data-tilt data-tilt-glare data-tilt-max-glare="0.3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <img src="https://raw.githubusercontent.com/krlvm/PowerTunnel/master/.github/images/logo.png" alt="Power Tunnel Icon">
+                <span>POWER TUNNEL</span>
+            </a>
+            
+            <a href="https://discord.gg/4KQrSF2cx4" class="link" data-tilt data-tilt-glare data-tilt-max-glare="0.3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                <img src="https://files.catbox.moe/tzbt3q.png" alt="Discord Icon">
+                <span>Discord Vonix</span>
+            </a>
+            
+            <a href="https://chat.whatsapp.com/EzjdiYeu3IvD4UQCxl3F7O" class="link" data-tilt data-tilt-glare data-tilt-max-glare="0.3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
+                <span>WhatsApp Vonix</span>
+            </a>
+        </div>
+        <div class="share-toggle" id="shareToggle">
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+
+        <div class="share-dropdown" id="shareDropdown">
+            <div class="share-dropdown-header">Bagikan Vonix PS</div>
+            <div class="share-platforms">
+                <div class="share-platform facebook" onclick="shareViaFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </div>
+                <div class="share-platform twitter" onclick="shareViaTwitter()">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </div>
+                <div class="share-platform whatsapp" onclick="shareViaWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="share-platform tiktok" onclick="shareViaTikTok()">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-icons" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+            <div class="social-icon" id="wa-icon" onclick="toggleWaDropdown()">
+                <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
+            </div>
+            
+            <a href="https://t.me/kuzuroken" class="social-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Icon">
+            </a>
+            
+            <div class="social-icon" id="tiktok-icon" onclick="toggleTiktokDropdown()">
+                <img src="https://files.catbox.moe/m18sf6.png" alt="TikTok Icon">
+            </div>
+            
+            <div id="wa-dropdown">
+                <a href="https://wa.me/081527641306" class="contact-item">
+                    <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
+                    Kuzu
+                </a>
+                <a href="https://wa.me/089616337061" class="contact-item">
+                    <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
+                    Dhill
+                </a>
+            </div>
+            
+            <div id="tiktok-dropdown">
+                <a href="https://www.tiktok.com/@orenni" class="contact-item">
+                    <img src="https://files.catbox.moe/m18sf6.png" alt="TikTok Icon">
+                    Kuzu
+                </a>
+                <a href="https://www.tiktok.com/@dhillxxzz" class="contact-item">
+                    <img src="https://files.catbox.moe/m18sf6.png" alt="TikTok Icon">
+                    Dhill
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-icon" id="chatbotIcon">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="chatbot-box">
+            <div class="chatbot-header">
+                <h3>Vonix Assistant</h3>
+                <i class="fas fa-times" id="closeChat"></i>
+            </div>
+            <div class="chatbot-messages" id="chatMessages">
+                <div class="bot-message">Hai! 👋 Selamat datang di Vonix PS. Ada yang bisa saya bantu?</div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Ketik pesan..." autocomplete="off">
+                <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="audio-control" id="audio-toggle">
+        <i class="fas fa-volume-mute"></i>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+<script src="vonix.js"></script>
+</body>
+</html>
