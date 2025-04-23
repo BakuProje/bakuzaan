@@ -95,7 +95,7 @@
         </div>
         
         <div class="social-icons" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
-            <div class="social-icon" id="wa-icon" onclick="toggleWaDropdown()">
+            <div class="social-icon" id="wa-icon" onclick="toggleWaPopup()">
                 <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
             </div>
             
@@ -103,11 +103,20 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Icon">
             </a>
             
-            <div class="social-icon" id="tiktok-icon" onclick="toggleTiktokDropdown()">
+            <div class="social-icon" id="tiktok-icon" onclick="toggleTiktokPopup()">
                 <img src="https://files.catbox.moe/m18sf6.png" alt="TikTok Icon">
             </div>
-            
-            <div id="wa-dropdown">
+        </div>
+    </div>
+    
+    <!-- Popup WhatsApp -->
+    <div class="popup-overlay" id="wa-popup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <h3>WhatsApp Kontak</h3>
+                <i class="fas fa-times close-popup" onclick="closePopup('wa-popup')"></i>
+            </div>
+            <div class="popup-content">
                 <a href="https://wa.me/081527641306" class="contact-item">
                     <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
                     Kuzu
@@ -117,8 +126,17 @@
                     Dhill
                 </a>
             </div>
-            
-            <div id="tiktok-dropdown">
+        </div>
+    </div>
+    
+    <!-- Popup TikTok -->
+    <div class="popup-overlay" id="tiktok-popup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <h3>TikTok Akun</h3>
+                <i class="fas fa-times close-popup" onclick="closePopup('tiktok-popup')"></i>
+            </div>
+            <div class="popup-content">
                 <a href="https://www.tiktok.com/@orenni" class="contact-item">
                     <img src="https://files.catbox.moe/m18sf6.png" alt="TikTok Icon">
                     Kuzu

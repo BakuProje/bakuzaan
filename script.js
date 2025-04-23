@@ -1,10 +1,10 @@
 const videoElement = document.getElementById('background-video');
 const videoSources = [
-    'https://files.catbox.moe/v0yfm9.mp4',
-    'https://files.catbox.moe/vu91zm.mp4',
-    'https://files.catbox.moe/64q266.mp4',
-    'https://files.catbox.moe/9q09k1.mp4',
-    'https://files.catbox.moe/fgrqas.mp4'
+    './isi/video/infobot.mp4',
+    './isi/video/video2.mp4',
+    './isi/video/video3.mp4',
+    './isi/video/video4.mp4',
+    './isi/video/video5.mp4'
 ];
 
 let currentVideoIndex = 0;
@@ -57,34 +57,22 @@ audioToggle.addEventListener('click', function() {
     }
 });
 
-function toggleWaDropdown() {
-    var dropdown = document.getElementById("wa-dropdown");
-    var tiktokDropdown = document.getElementById("tiktok-dropdown");
-    
-    tiktokDropdown.classList.remove("active");
-    
-    if (dropdown.classList.contains("active")) {
-        dropdown.classList.remove("active");
-        setTimeout(() => { dropdown.style.display = "none"; }, 300);
-    } else {
-        dropdown.style.display = "block";
-        setTimeout(() => { dropdown.classList.add("active"); }, 10);
-    }
+// Fungsi untuk popup WhatsApp
+function toggleWaPopup() {
+    const popup = document.getElementById('wa-popup');
+    popup.classList.add('active');
 }
 
-function toggleTiktokDropdown() {
-    var dropdown = document.getElementById("tiktok-dropdown");
-    var waDropdown = document.getElementById("wa-dropdown");
-    
-    waDropdown.classList.remove("active");
-    
-    if (dropdown.classList.contains("active")) {
-        dropdown.classList.remove("active");
-        setTimeout(() => { dropdown.style.display = "none"; }, 300);
-    } else {
-        dropdown.style.display = "block";
-        setTimeout(() => { dropdown.classList.add("active"); }, 10);
-    }
+// Fungsi untuk popup TikTok
+function toggleTiktokPopup() {
+    const popup = document.getElementById('tiktok-popup');
+    popup.classList.add('active');
+}
+
+// Fungsi untuk menutup popup
+function closePopup(popupId) {
+    const popup = document.getElementById(popupId);
+    popup.classList.remove('active');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -109,26 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
+// Menutup popup saat mengklik area di luar popup
 window.onclick = function(event) {
-    if (!event.target.matches('#wa-icon img') && !event.target.matches('#wa-icon') && 
-        !event.target.matches('#tiktok-icon img') && !event.target.matches('#tiktok-icon')) {
-        
-        var waDropdown = document.getElementById("wa-dropdown");
-        var tiktokDropdown = document.getElementById("tiktok-dropdown");
-        
-        if (waDropdown.classList.contains("active")) {
-            waDropdown.classList.remove("active");
-            setTimeout(() => { waDropdown.style.display = "none"; }, 300);
-        }
-        
-        if (tiktokDropdown.classList.contains("active")) {
-            tiktokDropdown.classList.remove("active");
-            setTimeout(() => { tiktokDropdown.style.display = "none"; }, 300);
-        }
+    if (event.target.classList.contains('popup-overlay')) {
+        event.target.classList.remove('active');
     }
 }
-
 
 window.addEventListener('load', function() {
     
