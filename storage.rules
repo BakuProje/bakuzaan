@@ -1,0 +1,16 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /chat_images/{imageId} {
+      // Izinkan semua akses baca
+      allow read: if true;
+      // Izinkan semua akses tulis
+      allow write: if true;
+    }
+    
+    // Aturan default, tidak mengizinkan akses
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+} 

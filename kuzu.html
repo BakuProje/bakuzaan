@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vonix PS - Admin Panel</title>
+    <link rel="shortcut icon" href="https://files.catbox.moe/qc4knm.jpg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #4cc9f0;
+            --success-color: #4ade80;
+            --danger-color: #f43f5e;
+            --warning-color: #fbbf24;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gray-color: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .admin-container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(145deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+            transition: var(--transition);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+        }
+        
+        .logo img:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+        
+        .logo h2 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .user-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .user-item {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-left: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+            border-left-color: #4cc9f0;
+        }
+        
+        .user-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left-color: white;
+        }
+        
+        .user-item .name {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .user-item .preview {
+            font-size: 12px;
+            opacity: 0.8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            margin-bottom: 5px;
+        }
+        
+        .user-item .time {
+            font-size: 11px;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-item .time i {
+            margin-right: 5px;
+            font-size: 10px;
+        }
+        
+        .user-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+        }
+        
+        .status-online {
+            background-color: #4ade80;
+            box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3);
+        }
+        
+        .status-away {
+            background-color: #fbbf24;
+            box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3);
+        }
+        
+        .status-offline {
+            background-color: #94a3b8;
+            box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.3);
+        }
+        
+        .user-item .notification {
+            background-color: #f43f5e;
+            color: white;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 0 6px;
+            box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(244, 63, 94, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, 0);
+            }
+        }
+        
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            border-radius: 0 16px 16px 0;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            font-size: 18px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .user-details h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .user-details p {
+            font-size: 13px;
+            color: var(--gray-color);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .actions button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        #backBtn {
+            background-color: #e2e8f0;
+            color: var(--dark-color);
+        }
+        
+        #backBtn:hover {
+            background-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+        
+        #endChatBtn {
+            background-color: #fecaca;
+            color: #b91c1c;
+        }
+        
+        #endChatBtn:hover {
+            background-color: #fca5a5;
+            transform: translateY(-2px);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(67, 97, 238, 0.03) 1%, transparent 2%),
+                radial-gradient(circle at 75% 75%, rgba(67, 97, 238, 0.03) 1%, transparent 2%);
+            background-size: 50px 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .message-date-separator {
+            text-align: center;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .message-date-separator::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background-color: #e2e8f0;
+            z-index: 1;
+        }
+        
+        .message-date-separator span {
+            background-color: #f8fafc;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 500;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .message {
+            max-width: 75%;
+            padding: 14px 16px;
+            border-radius: 18px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .message:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .user-message {
+            align-self: flex-start;
+            background-color: white;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .owner-message {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message .sender {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .user-message .sender {
+            color: #4361ee;
+        }
+        
+        .owner-message .sender {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .message .time {
+            position: absolute;
+            bottom: 5px;
+            right: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .owner-message .time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .message .content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #94a3b8;
+            margin-right: 5px;
+            animation: typingAnimation 1.5s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-5px); opacity: 1; }
+        }
+        
+        .chat-input {
+            padding: 18px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            background-color: white;
+        }
+        
+        .upload-image-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 0 10px;
+            transition: var(--transition);
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-image-btn:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+        
+        .chat-input button {
+            padding: 0 25px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            height: 45px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .chat-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .no-chat-selected {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8fafc;
+            flex-direction: column;
+            gap: 25px;
+            color: var(--gray-color);
+            border-radius: 0 16px 16px 0;
+        }
+        
+        .no-chat-selected i {
+            font-size: 60px;
+            color: var(--gray-color);
+            background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .no-chat-selected h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .no-chat-selected p {
+            font-size: 15px;
+            max-width: 450px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            color: var(--gray-color);
+            font-size: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 35vh;
+                border-radius: 0 0 16px 16px;
+            }
+            
+            .chat-container, .no-chat-selected {
+                height: 65vh;
+                border-radius: 16px 16px 0 0;
+            }
+        }
+      
+        .connection-status {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(5px);
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--warning-color);
+            box-shadow: 0 0 10px var(--warning-color);
+            transition: var(--transition);
+        }
+
+        .status-sending, .status-sent, .status-failed {
+            font-size: 12px;
+            text-align: right;
+            margin-top: 5px;
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .status-sending {
+            color: var(--gray-color);
+            font-style: italic;
+        }
+
+        .status-sent {
+            color: var(--success-color);
+        }
+
+        .status-failed {
+            color: var(--danger-color);
+        }
+        
+        .message-image {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message-image:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .image-preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .image-preview-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .preview-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-preview-modal.active .preview-image {
+            transform: scale(1);
+        }
+
+        .close-preview {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-preview:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+       
+        .upload-progress {
+            height: 6px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .image-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 300px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 5px 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        .image-loading i {
+            margin-bottom: 10px;
+            font-size: 24px;
+            animation: spin 1.5s infinite ease;
+            color: var(--secondary-color);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .message {
+            animation: messageAppear 0.3s ease-out;
+        }
+        
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+
+        .message-system {
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px 15px;
+            background-color: rgba(255, 193, 7, 0.1);
+            border: 1px dashed #ffc107;
+            border-radius: 8px;
+            text-align: center;
+            color: #664d03;
+            font-size: 13px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .message-system .system-content {
+            margin-bottom: 5px;
+        }
+        
+        .message-system .system-time {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        
+ 
+        .user-item.archived {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-left-color: #ffc107;
+        }
+        
+        .user-item.archived::after {
+            content: "DIARSIPKAN";
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            font-size: 9px;
+            background-color: #ffc107;
+            color: #000;
+            padding: 2px 5px;
+            border-radius: 4px;
+            opacity: 0.8;
+        }
+
+   
+        .message .time {
+            position: absolute;
+            bottom: 5px;
+            right: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .message {
+            position: relative;
+            padding-bottom: 25px; 
+        }
+
+        .message-date-separator {
+            display: none;
+        }
+
+        /* Login Form Styles */
+        .login-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #4361ee, #3a0ca3);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(145deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .login-form button:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <div class="error-message" id="errorMessage">Username atau password salah!</div>
+            <form class="login-form" id="loginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://files.catbox.moe/qc4knm.jpg" alt="Vonix PS Logo">
+                <h2>Vonix PS Admin</h2>
+            </div>
+            
+            <h3>Percakapan Aktif</h3>
+            <ul class="user-list" id="userList">
+             
+                <div class="empty-state">Belum ada percakapan aktif</div>
+            </ul>
+        </div>
+        
+        <div id="noChatSelected" class="no-chat-selected">
+            <i class="fas fa-comments"></i>
+            <h3>Belum ada percakapan yang dipilih</h3>
+            <p>Pilih percakapan dari daftar di sebelah kiri untuk mulai menjawab pertanyaan user.</p>
+        </div>
+        
+        <div id="chatContainer" class="chat-container" style="display: none;">
+            <div class="chat-header">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <h3 id="userName">Nama User</h3>
+                        <p id="userTime">Aktif 5 menit yang lalu</p>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button id="backBtn"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <button id="endChatBtn"><i class="fas fa-times"></i> Tutup Percakapan</button>
+                    <button onclick="logout()" style="background-color: #ef4444; color: white;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+              
+            </div>
+            
+            <div class="chat-input">
+                <button id="uploadImageBtn" class="upload-image-btn"><i class="fas fa-image"></i></button>
+                <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                <input type="text" id="replyInput" placeholder="Ketik balasan Anda...">
+                <button id="sendReplyBtn">Kirim</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="connection-status" id="connectionStatus">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <span id="statusText">Menghubungkan...</span>
+    </div>
+    
+ 
+    <div class="image-preview-modal" id="imagePreviewModal">
+        <div class="close-preview" id="closeImagePreview">&times;</div>
+        <img src="" alt="Preview" class="preview-image" id="previewImage">
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script>
+     
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQJSlxeUcyKbBh_a9hJdmyVYDrDxT_F5Q",
+            authDomain: "vonix-ps-chat.firebaseapp.com",
+            databaseURL: "https://vonix-ps-chat-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "vonix-ps-chat",
+            storageBucket: "vonix-ps-chat.appspot.com",
+            messagingSenderId: "297809543925",
+            appId: "1:297809543925:web:dc13bfe5c60abbb56c5bf2"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        } else {
+            firebase.app();
+        }
+        const database = firebase.database();
+        const storage = firebase.storage();
+  
+        const userList = document.getElementById('userList');
+        const noChatSelected = document.getElementById('noChatSelected');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userTime = document.getElementById('userTime');
+        const replyInput = document.getElementById('replyInput');
+        const sendReplyBtn = document.getElementById('sendReplyBtn');
+        const endChatBtn = document.getElementById('endChatBtn');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        
+        let currentChatId = null;
+        const activeChats = {};
+        const unreadMessages = {};
+        
+        const displayedMessageIds = new Set();
+        
+   
+        const connectedRef = database.ref(".info/connected");
+        connectedRef.on("value", (snap) => {
+            if (snap.val() === true) {
+                console.log("Connected to Firebase");
+                statusIndicator.style.backgroundColor = "#4CAF50";
+                statusText.textContent = "Terhubung";
+                
+               
+                loadChats();
+            } else {
+                console.log("Disconnected from Firebase");
+                statusIndicator.style.backgroundColor = "#F44336";
+                statusText.textContent = "Terputus";
+            }
+        });
+        
+       
+        function loadChats() {
+            
+            database.ref('chats').on('child_added', (snapshot) => {
+                const chatId = snapshot.key;
+                const chatData = snapshot.val();
+                
+                console.log("Percakapan baru terdeteksi:", chatId, chatData);
+                
+          
+                activeChats[chatId] = chatData;
+                
+               
+                unreadMessages[chatId] = 0;
+                
+               
+                updateUserList();
+             
+                listenForNewMessages(chatId);
+            }, (error) => {
+                console.error("Error saat mendengarkan percakapan baru:", error);
+                statusText.textContent = "Error: " + error.message;
+            });
+            
+            
+            database.ref('chats').on('child_changed', (snapshot) => {
+                const chatId = snapshot.key;
+                const chatData = snapshot.val();
+                
+                console.log("Percakapan berubah:", chatId, chatData);
+                
+              
+                activeChats[chatId] = chatData;
+                
+               
+                if (currentChatId === chatId) {
+                    userName.textContent = chatData.name || "User tanpa nama";
+                    userAvatar.textContent = (chatData.name || "User")[0].toUpperCase();
+                }
+                
+             
+                updateUserList();
+            });
+            
+         
+            database.ref('chats').on('child_removed', (snapshot) => {
+                const chatId = snapshot.key;
+              
+                delete activeChats[chatId];
+                delete unreadMessages[chatId];
+                
+      
+                updateUserList();
+                
+      
+                if (currentChatId === chatId) {
+                    currentChatId = null;
+                    chatContainer.style.display = 'none';
+                    noChatSelected.style.display = 'flex';
+                }
+            });
+        }
+
+    
+        function listenForNewMessages(chatId) {
+            console.log("Mulai mendengarkan pesan dari percakapan:", chatId);
+            
+            database.ref(`chats/${chatId}/messages`).orderByChild('timestamp').on('child_added', (snapshot) => {
+                const messageId = snapshot.key;
+                const messageData = snapshot.val();
+                
+                console.log("Pesan terdeteksi di percakapan", chatId, ":", messageData);
+           
+                if (messageData.sender === 'user' && messageData.status === 'waiting') {
+                
+                    if (currentChatId === chatId) {
+                        markMessageAsRead(chatId, messageId);
+                    } else {
+                 
+                        unreadMessages[chatId]++;
+                        updateUserList();
+                        
+                   
+                        playNotificationSound();
+                    }
+                }
+                
+              
+                if (currentChatId === chatId) {
+                    displayMessage(messageData, messageId);
+                }
+            }, (error) => {
+                console.error("Error saat mendengarkan pesan baru di percakapan", chatId, ":", error);
+            });
+        }
+        
+   
+        function playNotificationSound() {
+            const audio = new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1cec9.mp3?filename=notification-sound-7062.mp3');
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log('Audio play failed:', e));
+        }
+        
+    
+        function updateUserList() {
+            
+            if (Object.keys(activeChats).length > 0) {
+                userList.innerHTML = '';
+            } else {
+                userList.innerHTML = '<div class="empty-state">Belum ada percakapan aktif</div>';
+                return;
+            }
+            
+          
+            const sortedChats = Object.entries(activeChats)
+                .sort(([, a], [, b]) => b.last_activity - a.last_activity);
+            
+         
+            for (const [chatId, chatData] of sortedChats) {
+                const listItem = document.createElement('li');
+                listItem.className = 'user-item';
+                if (chatId === currentChatId) {
+                    listItem.classList.add('active');
+                }
+                
+               
+                const userName = chatData.name || "User tanpa nama";
+                
+             
+                const lastActivity = new Date(chatData.last_activity);
+                const now = new Date();
+                const diffMs = now - lastActivity;
+                const diffMins = Math.round(diffMs / 60000);
+                
+                let statusClass = 'status-offline';
+                if (diffMins < 5) {
+                    statusClass = 'status-online';
+                } else if (diffMins < 30) {
+                    statusClass = 'status-away';
+                }
+                
+                let timeString;
+                if (diffMins < 1) {
+                    timeString = 'Baru saja';
+                } else if (diffMins < 60) {
+                    timeString = `${diffMins} menit yang lalu`;
+                } else {
+                    const diffHours = Math.floor(diffMins / 60);
+                    if (diffHours < 24) {
+                        timeString = `${diffHours} jam yang lalu`;
+                    } else {
+                        const diffDays = Math.floor(diffHours / 24);
+                        timeString = `${diffDays} hari yang lalu`;
+                    }
+                }
+                
+                let lastMessagePreview = 'Belum ada pesan';
+                if (chatData.messages) {
+                    const messages = Object.values(chatData.messages);
+                    if (messages.length > 0) {
+                        const sortedMessages = messages.sort((a, b) => b.timestamp - a.timestamp);
+                        const lastMessage = sortedMessages[0];
+                        if (lastMessage.messageType === 'image') {
+                            lastMessagePreview = '📷 Gambar';
+                        } else {
+                            lastMessagePreview = lastMessage.message.substring(0, 30) + (lastMessage.message.length > 30 ? '...' : '');
+                        }
+                    }
+                }
+                
+                listItem.innerHTML = `
+                    <div class="name">
+                        <div>
+                            <span class="user-status ${statusClass}"></span>
+                            ${userName}
+                        </div>
+                        ${unreadMessages[chatId] > 0 ? `<div class="notification">${unreadMessages[chatId]}</div>` : ''}
+                    </div>
+                    <div class="preview">${lastMessagePreview}</div>
+                    <div class="time">
+                        <i class="fas fa-clock"></i> ${timeString}
+                    </div>
+                `;
+                
+            
+                listItem.addEventListener('click', () => {
+                    selectChat(chatId);
+                });
+                
+                userList.appendChild(listItem);
+            }
+        }
+        
+       
+        function selectChat(chatId) {
+            currentChatId = chatId;
+            
+           
+            noChatSelected.style.display = 'none';
+            chatContainer.style.display = 'flex';
+            
+          
+            const chat = activeChats[chatId];
+            userName.textContent = chat.name || "User tanpa nama";
+            userAvatar.textContent = (chat.name || "User")[0].toUpperCase();
+           
+            const lastActivity = new Date(chat.last_activity);
+            const now = new Date();
+            const diffMs = now - lastActivity;
+            const diffMins = Math.round(diffMs / 60000);
+            
+            let timeString;
+            if (diffMins < 1) {
+                timeString = 'Aktif baru saja';
+            } else if (diffMins < 60) {
+                timeString = `Aktif ${diffMins} menit yang lalu`;
+            } else {
+                const diffHours = Math.floor(diffMins / 60);
+                if (diffHours < 24) {
+                    timeString = `Aktif ${diffHours} jam yang lalu`;
+                } else {
+                    const diffDays = Math.floor(diffHours / 24);
+                    timeString = `Aktif ${diffDays} hari yang lalu`;
+                }
+            }
+            
+            userTime.textContent = timeString;
+            
+       
+            chatMessages.innerHTML = '';
+            
+        
+            loadMessages(chatId);
+            
+      
+            unreadMessages[chatId] = 0;
+            
+            updateUserList();
+        }
+        
+        function loadMessages(chatId) {
+            displayedMessageIds.clear();
+            
+            database.ref(`chats/${chatId}/messages`).orderByChild('timestamp').once('value', (snapshot) => {
+                const messages = snapshot.val();
+                
+                chatMessages.innerHTML = '';
+                
+                if (!messages) {
+                    const emptyMessage = document.createElement('div');
+                    emptyMessage.className = 'empty-message';
+                    emptyMessage.textContent = 'Belum ada pesan';
+                    chatMessages.appendChild(emptyMessage);
+                    return;
+                }
+                
+         
+                const messagesByDate = {};
+              
+                const sortedMessages = Object.entries(messages)
+                    .sort(([, a], [, b]) => a.timestamp - b.timestamp);
+                
+        
+                sortedMessages.forEach(([messageId, messageData]) => {
+                    const messageDate = new Date(messageData.timestamp).toLocaleDateString();
+                    if (!messagesByDate[messageDate]) {
+                        messagesByDate[messageDate] = [];
+                    }
+                    messagesByDate[messageDate].push([messageId, messageData]);
+                });
+                
+         
+                Object.keys(messagesByDate).forEach(date => {
+                    messagesByDate[date].forEach(([messageId, messageData]) => {
+                        displayMessage(messageData, messageId, false);
+                        
+                        if (messageData.sender === 'user' && messageData.status === 'waiting') {
+                            markMessageAsRead(chatId, messageId);
+                        }
+                    });
+                });
+                
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+        
+   
+        function displayMessage(messageData, messageId, skipDateCheck = true) {
+            if (displayedMessageIds.has(messageId)) {
+                console.log("Pesan sudah ditampilkan, skip:", messageId);
+                return;
+            }
+            
+            const existingMessages = chatMessages.querySelectorAll('.message');
+            let isDuplicate = false;
+            
+            for (const msg of existingMessages) {
+                const msgContent = msg.querySelector('.content')?.textContent;
+                const msgTime = msg.dataset.timestamp;
+                
+                if (msgContent === messageData.message && 
+                    msgTime && messageData.timestamp && 
+                    Math.abs(parseInt(msgTime) - messageData.timestamp) < 5000) {
+                    console.log("Pesan duplikat terdeteksi:", messageData.message);
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            
+            if (isDuplicate) return;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = messageData.sender === 'user' ? 'message user-message' : 'message owner-message';
+            messageDiv.dataset.timestamp = messageData.timestamp;
+            messageDiv.dataset.id = messageId;
+            
+            const formattedTime = formatTimestamp(messageData.timestamp);
+            
+            messageDiv.innerHTML = `
+                <div class="sender">${messageData.sender === 'user' ? (messageData.name || 'User') : 'Owner Vonix PS'}</div>
+                <div class="content">${messageData.message}</div>
+                <div class="time">${formattedTime}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            displayedMessageIds.add(messageId);
+        }
+        
+  
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+        
+ 
+        function markMessageAsRead(chatId, messageId) {
+            console.log("Menandai pesan sebagai dibaca:", chatId, messageId);
+            
+            database.ref(`chats/${chatId}/messages/${messageId}`).update({
+                status: 'read'
+            }).then(() => {
+                console.log("Status pesan berhasil diupdate menjadi 'read'");
+            }).catch(error => {
+                console.error("Error saat mengupdate status pesan:", error);
+            });
+        }
+        
+   
+        sendReplyBtn.addEventListener('click', sendReply);
+        replyInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendReply();
+            }
+        });
+        
+        function sendReply() {
+            const message = replyInput.value.trim();
+            if (message === '' || !currentChatId) return;
+          
+            sendReplyBtn.disabled = true;
+            sendReplyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            const now = new Date();
+            const timestamp = now.getTime();
+            
+            console.log("Mengirim balasan:", message, "ke chatId:", currentChatId);
+            
+            const tempMessageDiv = document.createElement('div');
+            tempMessageDiv.className = 'message owner-message';
+            tempMessageDiv.innerHTML = `
+                <div class="sender">Owner Vonix PS</div>
+                <div class="content">${message}</div>
+                <div class="time">${formatTimestamp(timestamp)}</div>
+                <div class="status-sending">Mengirim...</div>
+            `;
+            chatMessages.appendChild(tempMessageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+          
+            sendMessageWithRetry(currentChatId, message, timestamp, tempMessageDiv, 0);
+            
+            replyInput.value = '';
+        }
+        
+  
+        function sendMessageWithRetry(chatId, message, timestamp, messageDiv, retryCount) {
+            const maxRetries = 3;
+
+            const messageHash = hashString(message + timestamp);
+            const consistentMsgId = `owner_${timestamp}_${messageHash}`;
+            
+           
+            database.ref(`chats/${chatId}/messages/${consistentMsgId}`).set({
+                sender: 'owner',
+                message: message,
+                timestamp: timestamp
+            }).then(() => {
+                console.log("Balasan berhasil disimpan di Firebase");
+                
+               
+                if (messageDiv) {
+                    const statusEl = messageDiv.querySelector('.status-sending');
+                    if (statusEl) {
+                        statusEl.textContent = 'Terkirim';
+                        statusEl.className = 'status-sent';
+                        
+                    
+                        setTimeout(() => {
+                            statusEl.remove();
+                        }, 2000);
+                    }
+                }
+                
+               
+                return database.ref(`chats/${chatId}`).update({
+                    last_activity: timestamp
+                });
+            }).then(() => {
+                console.log("Waktu aktivitas berhasil diupdate");
+               
+                sendReplyBtn.disabled = false;
+                sendReplyBtn.innerHTML = 'Kirim';
+            }).catch(error => {
+                console.error("Error saat mengirim balasan:", error);
+                
+              
+                if (retryCount < maxRetries) {
+                    console.log(`Mencoba kembali (${retryCount + 1}/${maxRetries})...`);
+                    
+                   
+                    if (messageDiv) {
+                        const statusEl = messageDiv.querySelector('.status-sending');
+                        if (statusEl) {
+                            statusEl.textContent = `Mencoba kembali (${retryCount + 1}/${maxRetries})...`;
+                        }
+                    }
+                 
+                    setTimeout(() => {
+                        sendMessageWithRetry(chatId, message, timestamp, messageDiv, retryCount + 1);
+                    }, 1000);
+                } else {
+                    
+                    alert("Gagal mengirim balasan setelah beberapa percobaan. Silakan coba lagi.");
+                    
+                   
+                    if (messageDiv) {
+                        const statusEl = messageDiv.querySelector('.status-sending');
+                        if (statusEl) {
+                            statusEl.textContent = 'Gagal terkirim';
+                            statusEl.className = 'status-failed';
+                        }
+                    }
+                    
+                    sendReplyBtn.disabled = false;
+                    sendReplyBtn.innerHTML = 'Kirim';
+                }
+            });
+        }
+        
+        
+        function hashString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; 
+            }
+            return Math.abs(hash).toString(16).substring(0, 8);
+        }
+        
+       
+        endChatBtn.addEventListener('click', () => {
+            if (!currentChatId) return;
+            
+            if (confirm('Apakah Anda yakin ingin menutup percakapan ini? Percakapan akan diarsipkan tetapi tidak dihapus.')) {
+               
+                const now = new Date();
+                const timestamp = now.getTime();
+                
+                backupChat(currentChatId);
+                
+                const newMessageRef = database.ref(`chats/${currentChatId}/messages`).push();
+                newMessageRef.set({
+                    sender: 'owner',
+                    message: 'Percakapan ini telah ditutup oleh Owner. Terima kasih telah menghubungi kami.',
+                    timestamp: timestamp,
+                    isSystemMessage: true
+                });
+                
+             
+                database.ref(`chats/${currentChatId}`).update({
+                    status: 'archived',
+                    archived_at: timestamp,
+                    last_activity: timestamp
+                });
+                
+                currentChatId = null;
+                chatContainer.style.display = 'none';
+                noChatSelected.style.display = 'flex';
+                
+          
+                updateUserList();
+            }
+        });
+
+     
+        document.getElementById('backBtn').addEventListener('click', () => {
+            currentChatId = null;
+            chatContainer.style.display = 'none';
+            noChatSelected.style.display = 'flex';
+            updateUserList();
+        });
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+          
+            console.log("Menguji koneksi ke Firebase...");
+            
+            const testRef = database.ref('test_connection_admin');
+            testRef.set({
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                message: "Tes koneksi dari admin panel"
+            }).then(() => {
+                console.log("Data tes berhasil dikirim");
+                return testRef.once('value');
+            }).then((snapshot) => {
+                console.log("Berhasil membaca data:", snapshot.val());
+                statusIndicator.style.backgroundColor = "#4CAF50";
+                statusText.textContent = "Terhubung - Tes Berhasil";
+                
+             
+                const lastActiveChat = localStorage.getItem('activeChat');
+                if (lastActiveChat) {
+                    console.log("Memulihkan chat aktif:", lastActiveChat);
+                    
+                }
+            }).catch(error => {
+                console.error("Error tes koneksi:", error);
+                statusIndicator.style.backgroundColor = "#F44336";
+                statusText.textContent = "Error: " + error.message;
+            });
+        });
+
+  
+        const uploadImageBtn = document.getElementById('uploadImageBtn');
+        const imageFileInput = document.getElementById('imageFileInput');
+        const imagePreviewModal = document.getElementById('imagePreviewModal');
+        const previewImage = document.getElementById('previewImage');
+        const closeImagePreview = document.getElementById('closeImagePreview');
+        
+
+        uploadImageBtn.addEventListener('click', function() {
+            imageFileInput.click();
+        });
+        
+       
+        imageFileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+          
+                if (!file.type.match('image.*')) {
+                    alert('Hanya file gambar yang diperbolehkan');
+                    return;
+                }
+                
+              
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Ukuran file maksimal 5MB');
+                    return;
+                }
+                
+                uploadImageToChat(file);
+            }
+        });
+        
+   
+        function uploadImageToChat(file) {
+            if (!currentChatId) {
+                alert('Pilih chat terlebih dahulu');
+                return;
+            }
+            
+            const now = new Date();
+            const timestamp = now.getTime();
+            const fileName = `admin_${currentChatId}_${timestamp}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+            
+           
+            const loadingMessage = document.createElement('div');
+            loadingMessage.className = 'message owner-message';
+            
+            const loadingContainer = document.createElement('div');
+            loadingContainer.className = 'image-loading';
+            loadingContainer.innerHTML = '<i class="fas fa-spinner"></i> Mengunggah gambar...';
+            loadingMessage.appendChild(loadingContainer);
+            
+            const progressContainer = document.createElement('div');
+            progressContainer.className = 'upload-progress';
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar';
+            progressContainer.appendChild(progressBar);
+            loadingMessage.appendChild(progressContainer);
+            
+            chatMessages.appendChild(loadingMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+           
+            const storageRef = storage.ref(`chat_images/${fileName}`);
+            
+           
+            const metadata = {
+                contentType: file.type,
+                customMetadata: {
+                    'uploadedBy': 'admin',
+                    'timestamp': timestamp.toString(),
+                    'chatId': currentChatId,
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+                    'Access-Control-Allow-Headers': 'Content-Type'
+                }
+            };
+            
+         
+            const uploadTask = storageRef.put(file, metadata);
+            
+            
+            uploadTask.on('state_changed', 
+                
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = progress + '%';
+                },
+               
+                (error) => {
+                    console.error('Error upload:', error);
+                    loadingContainer.innerHTML = '<i class="fas fa-exclamation-circle"></i> Gagal mengunggah gambar';
+                    loadingContainer.style.color = '#ff5757';
+                    
+                    
+                    const errorDetails = document.createElement('div');
+                    errorDetails.textContent = `Error: ${error.code} - ${error.message}`;
+                    errorDetails.style.fontSize = '12px';
+                    errorDetails.style.marginTop = '5px';
+                    loadingContainer.appendChild(errorDetails);
+                },
+              
+                async () => {
+                    try {
+                        
+                        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                        
+                      
+                        let secureURL = downloadURL;
+                        if (!secureURL.startsWith('https')) {
+                            secureURL = secureURL.replace('http:', 'https:');
+                        }
+                        const urlWithCacheBuster = `${secureURL}?timestamp=${timestamp}&rand=${Math.random().toString(36).substring(7)}`;
+                        
+                    
+                        chatMessages.removeChild(loadingMessage);
+                        
+                     
+                        const messageHash = hashString(downloadURL + timestamp);
+                        const consistentMsgId = `owner_image_${timestamp}_${messageHash}`;
+                        
+                        const imageContainer = document.createElement('div');
+                        imageContainer.className = 'image-container';
+                        
+                        const image = document.createElement('img');
+                        image.className = 'message-image';
+                        image.src = urlWithCacheBuster;
+                        image.addEventListener('click', function() {
+                            showImagePreview(urlWithCacheBuster);
+                        });
+                        
+                        imageContainer.appendChild(image);
+                        
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'message owner-message';
+                        messageDiv.dataset.timestamp = timestamp;
+                        messageDiv.dataset.id = consistentMsgId;
+                        
+                        const senderDiv = document.createElement('div');
+                        senderDiv.className = 'sender';
+                        senderDiv.textContent = 'Owner Vonix PS';
+                        
+                        const timeDiv = document.createElement('div');
+                        timeDiv.className = 'time';
+                        timeDiv.textContent = formatTimestamp(timestamp);
+                        
+                        messageDiv.appendChild(senderDiv);
+                        messageDiv.appendChild(imageContainer);
+                        messageDiv.appendChild(timeDiv);
+                        
+                        chatMessages.appendChild(messageDiv);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        
+                   
+                        return database.ref(`chats/${currentChatId}/messages/${consistentMsgId}`).set({
+                            sender: 'owner',
+                            messageType: 'image',
+                            imageURL: downloadURL,
+                            message: 'Image',
+                            timestamp: timestamp
+                        }).then(() => {
+                            console.log("Gambar berhasil disimpan di Firebase");
+
+                            return database.ref(`chats/${currentChatId}`).update({
+                                last_activity: timestamp
+                            });
+                        }).then(() => {
+                            console.log("Waktu aktivitas berhasil diupdate");
+                        }).catch(error => {
+                            console.error("Error saat menyimpan pesan gambar:", error);
+                            alert("Gambar berhasil diupload tetapi gagal menyimpan ke database. Silakan coba lagi.");
+                        });
+                    } catch (error) {
+                        console.error('Error mendapatkan URL download:', error);
+                        loadingContainer.innerHTML = '<i class="fas fa-exclamation-circle"></i> Gagal mendapatkan URL gambar';
+                        loadingContainer.style.color = '#ff5757';
+                        
+                        
+                        const errorDetails = document.createElement('div');
+                        errorDetails.textContent = `Error: ${error.code || ''} - ${error.message}`;
+                        errorDetails.style.fontSize = '12px';
+                        errorDetails.style.marginTop = '5px';
+                        loadingContainer.appendChild(errorDetails);
+                    }
+                }
+            );
+        }
+        
+     
+        function showImagePreview(imageURL) {
+            previewImage.src = imageURL;
+            imagePreviewModal.classList.add('active');
+        }
+        
+
+        closeImagePreview.addEventListener('click', function() {
+            imagePreviewModal.classList.remove('active');
+        });
+        
+
+        imagePreviewModal.addEventListener('click', function(e) {
+            if (e.target === imagePreviewModal) {
+                imagePreviewModal.classList.remove('active');
+            }
+        });
+
+      
+        window.addEventListener('beforeunload', function(e) {
+          
+            if (currentChatId) {
+                localStorage.setItem('activeChat', currentChatId);
+            }
+        });
+        
+       
+        function backupChat(chatId) {
+            if (!chatId) return;
+            
+        
+            database.ref(`chats/${chatId}`).once('value', (snapshot) => {
+                const chatData = snapshot.val();
+                if (chatData) {
+                    const backupPath = `chat_backups/${chatId}_${Date.now()}`;
+                    database.ref(backupPath).set(chatData)
+                        .then(() => console.log(`Chat ${chatId} berhasil dicadangkan ke ${backupPath}`))
+                        .catch(error => console.error(`Gagal mencadangkan chat: ${error.message}`));
+                }
+            });
+        }
+
+ 
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginContainer = document.getElementById('loginContainer');
+            const loginForm = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const adminContent = document.querySelector('.admin-container');
+
+           
+            if (!localStorage.getItem('adminLoggedIn')) {
+                loginContainer.style.display = 'flex';
+                adminContent.style.display = 'none';
+            }
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (username === 'kuzuroken' && password === '@kuzuroken#4') {
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    loginContainer.style.display = 'none';
+                    adminContent.style.display = 'flex';
+                    errorMessage.style.display = 'none';
+                } else {
+                    errorMessage.style.display = 'block';
+                    localStorage.removeItem('adminLoggedIn');
+                }
+            });
+        });
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            window.location.reload();
+        }
+    </script>
+</body>
+</html> 
