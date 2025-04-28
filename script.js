@@ -1939,3 +1939,32 @@ function createSnowflake(container, chars) {
 document.addEventListener('DOMContentLoaded', function() {
     createSnowflakes();
 });
+
+
+function initServerStatus() {
+    const statusIndicator = document.getElementById('statusIndicator');
+    const statusText = document.getElementById('statusText');
+    
+    
+    const serverStatusRef = database.ref('serverStatus');
+    
+ 
+    serverStatusRef.on('value', (snapshot) => {
+        const status = snapshot.val() || { status: 'online', message: 'Server: Online' };
+        
+      
+        statusIndicator.classList.remove('online', 'offline', 'maintenance');
+        
+     
+        statusIndicator.classList.add(status.status);
+        
+       
+        statusText.textContent = status.message;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+ 
+    initServerStatus();
+ 
+});

@@ -36,11 +36,29 @@
             background-color: #f1f5f9;
             color: var(--dark-color);
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
+
+
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #4361ee, #3a0ca3);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
         .admin-container {
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
+            width: 100%;
         }
         
         .sidebar {
@@ -80,6 +98,118 @@
             font-size: 18px;
             font-weight: 600;
             letter-spacing: 0.5px;
+        }
+        
+        .server-status-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .server-status-panel h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .server-status-panel h3 i {
+            color: #4cc9f0;
+        }
+        
+        .status-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .status-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .status-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .status-btn.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 3px solid #4cc9f0;
+        }
+        
+        .status-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .status-color.online {
+            background-color: #4ade80;
+            box-shadow: 0 0 5px #4ade80;
+        }
+        
+        .status-color.offline {
+            background-color: #f43f5e;
+            box-shadow: 0 0 5px #f43f5e;
+        }
+        
+        .status-color.maintenance {
+            background-color: #fbbf24;
+            box-shadow: 0 0 5px #fbbf24;
+        }
+        
+        .custom-status {
+            margin-top: 10px;
+        }
+        
+        .custom-status input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .custom-status input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .custom-status input:focus {
+            outline: none;
+            border-color: #4cc9f0;
+        }
+        
+        .apply-custom-btn {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: #4cc9f0;
+            border: none;
+            color: #0f172a;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .apply-custom-btn:hover {
+            background-color: #4361ee;
+            color: white;
+            transform: translateY(-2px);
         }
         
         .user-list {
@@ -205,12 +335,12 @@
         
         .chat-header {
             padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            background-color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: #1a1a2e;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .user-info {
@@ -236,12 +366,14 @@
         .user-details h3 {
             font-size: 17px;
             font-weight: 600;
-            color: var(--dark-color);
+            color: white;
+            margin-bottom: 2px;
         }
         
         .user-details p {
             font-size: 13px;
-            color: var(--gray-color);
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
         }
         
         .actions {
@@ -264,23 +396,37 @@
         }
         
         #backBtn {
-            background-color: #e2e8f0;
-            color: var(--dark-color);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         #backBtn:hover {
-            background-color: #cbd5e1;
+            background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
         
         #endChatBtn {
-            background-color: #fecaca;
-            color: #b91c1c;
+            background-color: rgba(244, 63, 94, 0.2);
+            color: #fecaca;
+            border: 1px solid rgba(244, 63, 94, 0.3);
         }
         
         #endChatBtn:hover {
-            background-color: #fca5a5;
+            background-color: rgba(244, 63, 94, 0.3);
             transform: translateY(-2px);
+        }
+
+        .actions button:last-child {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border: none;
+        }
+
+        .actions button:last-child:hover {
+            background-color: #dc2626 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.5);
         }
         
         .chat-messages {
@@ -533,17 +679,239 @@
         @media (max-width: 768px) {
             .admin-container {
                 flex-direction: column;
+                height: 100vh;
+                overflow: hidden;
             }
             
             .sidebar {
                 width: 100%;
-                height: 35vh;
-                border-radius: 0 0 16px 16px;
+                height: auto;
+                max-height: 45vh;
+                border-radius: 0;
+                padding: 15px;
+                overflow-y: auto;
             }
-            
-            .chat-container, .no-chat-selected {
-                height: 65vh;
-                border-radius: 16px 16px 0 0;
+
+            .logo {
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+            }
+
+            .logo img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .logo h2 {
+                font-size: 16px;
+            }
+
+            .server-status-panel {
+                margin: 10px 0;
+                padding: 12px;
+            }
+
+            .server-status-panel h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .status-btn {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .user-list {
+                margin-top: 10px;
+            }
+
+            .user-item {
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+
+            .user-item .name {
+                font-size: 14px;
+            }
+
+            .user-item .preview {
+                font-size: 12px;
+                max-width: 100%;
+            }
+
+            .chat-container {
+                height: 55vh;
+                border-radius: 20px 20px 0 0;
+                margin-top: -20px;
+                background: white;
+                position: relative;
+                z-index: 10;
+            }
+
+            .chat-header {
+                padding: 15px;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .user-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .user-details h3 {
+                font-size: 15px;
+            }
+
+            .user-details p {
+                font-size: 12px;
+            }
+
+            .actions {
+                gap: 8px;
+            }
+
+            .actions button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .chat-messages {
+                padding: 15px;
+                height: calc(55vh - 130px);
+            }
+
+            .message {
+                max-width: 85%;
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .chat-input {
+                padding: 12px;
+                gap: 8px;
+            }
+
+            .chat-input input {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+
+            .upload-image-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            .no-chat-selected {
+                padding: 20px;
+                text-align: center;
+            }
+
+            .no-chat-selected i {
+                font-size: 40px;
+                margin-bottom: 15px;
+            }
+
+            .no-chat-selected h3 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .no-chat-selected p {
+                font-size: 13px;
+            }
+
+            .connection-status {
+                bottom: 10px;
+                left: 10px;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .admin-container {
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .sidebar {
+                width: 300px;
+                border-radius: 20px 0 0 20px;
+                padding: 25px;
+            }
+
+            .chat-container {
+                flex: 1;
+                border-radius: 0 20px 20px 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .chat-messages {
+                flex: 1;
+                height: calc(100vh - 180px);
+            }
+
+            .message {
+                max-width: 70%;
+            }
+
+            .no-chat-selected {
+                border-radius: 0 20px 20px 0;
+            }
+        }
+
+ 
+        .chat-container, .no-chat-selected {
+            background-color: #f8fafc;
+        }
+
+        .message.user-message {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .message.owner-message {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            box-shadow: 0 2px 5px rgba(67, 97, 238, 0.15);
+        }
+
+      
+        * {
+            scroll-behavior: smooth;
+        }
+
+      
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+     
+        @media (hover: none) {
+            .user-item, .status-btn, .actions button {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .user-item:active, .status-btn:active, .actions button:active {
+                transform: scale(0.98);
             }
         }
       
@@ -784,7 +1152,6 @@
             display: none;
         }
 
-        /* Login Form Styles */
         .login-container {
             display: none;
             position: fixed;
@@ -845,10 +1212,989 @@
             margin-bottom: 15px;
             display: none;
         }
+
+        .server-status-manager {
+            margin-left: 15px;
+        }
+        
+        .server-status-btn {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .server-status-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .server-status-btn .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .server-status-btn.online .status-dot {
+            background-color: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+        }
+        
+        .server-status-btn.maintenance .status-dot {
+            background-color: #fbbf24;
+            box-shadow: 0 0 8px #fbbf24;
+        }
+        
+        .server-status-btn.offline .status-dot {
+            background-color: #f43f5e;
+            box-shadow: 0 0 8px #f43f5e;
+        }
+        
+        .server-status-btn .status-text {
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+     
+        .status-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .status-modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .status-modal.show .status-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .status-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .status-modal-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+        
+        .close-status-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: all 0.2s ease;
+        }
+        
+        .close-status-modal:hover {
+            color: #1e293b;
+        }
+        
+        .status-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .status-option:hover {
+            background-color: #f8fafc;
+        }
+        
+        .status-option.selected {
+            background-color: #f1f5f9;
+            border-left: 3px solid #4361ee;
+        }
+        
+        .status-option .status-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .status-option .status-dot.online {
+            background-color: #4ade80;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+        }
+        
+        .status-option .status-dot.maintenance {
+            background-color: #fbbf24;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        .status-option .status-dot.offline {
+            background-color: #f43f5e;
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
+        }
+        
+        .status-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .status-details p {
+            margin: 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .status-message {
+            margin-top: 20px;
+        }
+        
+        .status-message label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+        }
+        
+        .status-message input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .status-message input:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+        
+        .status-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        
+        .status-modal-footer button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        #cancelStatusChange {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+        
+        #cancelStatusChange:hover {
+            background-color: #cbd5e1;
+        }
+        
+        #saveStatusChange {
+            background-color: #4361ee;
+            color: white;
+        }
+        
+        #saveStatusChange:hover {
+            background-color: #3a56d4;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        @media (max-width: 640px) {
+            .status-modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+        }
+
+        
+        .server-status-control {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .server-status-control h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .status-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .status-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .status-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-btn.active {
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .status-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-color.online {
+            background-color: #4ade80;
+            box-shadow: 0 0 5px #4ade80;
+        }
+
+        .status-color.offline {
+            background-color: #f43f5e;
+            box-shadow: 0 0 5px #f43f5e;
+        }
+
+        .status-color.maintenance {
+            background-color: #fbbf24;
+            box-shadow: 0 0 5px #fbbf24;
+        }
+
+        .custom-status {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .custom-status input {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .custom-status input:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        .apply-custom-btn {
+            padding: 10px 15px;
+            background: linear-gradient(145deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-custom-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(58, 12, 163, 0.3);
+        }
+
+        .status-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status-modal.show {
+            opacity: 1;
+        }
+
+        .status-modal-content {
+            position: relative;
+            background: #1a1a2e;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .status-modal.show .status-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .status-modal-header {
+            display: flex;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 20px;
+        }
+
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .header-text h3 {
+            color: white;
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .header-text p {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+
+        .close-status-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-status-modal i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .close-status-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .status-modal-body {
+            padding: 30px;
+        }
+
+        .status-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-option {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .status-option.selected {
+            background: rgba(67, 97, 238, 0.15);
+            border-color: #4361ee;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .status-icon i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .status-details {
+            flex: 1;
+        }
+
+        .status-details h4 {
+            color: white;
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .status-details p {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 5px 0 0;
+            font-size: 13px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 15px;
+        }
+
+        .status-indicator.online {
+            background: #4ade80;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+        }
+
+        .status-indicator.maintenance {
+            background: #fbbf24;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        .status-indicator.offline {
+            background: #f43f5e;
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
+        }
+
+        .status-message-section {
+            margin-top: 30px;
+        }
+
+        .status-message-section label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .status-message-section label i {
+            color: #4361ee;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            padding-right: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #4361ee;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .input-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .status-message-section small {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .status-modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .btn-secondary, .btn-primary {
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .status-modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+            
+            .status-modal-header {
+                padding: 20px;
+            }
+            
+            .status-modal-body {
+                padding: 20px;
+            }
+            
+            .status-modal-footer {
+                padding: 20px;
+                flex-direction: column;
+            }
+            
+            .btn-secondary, .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+     
+        .swal2-popup {
+            background: rgba(31, 41, 55, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px !important;
+            padding: 2rem !important;
+            color: white !important;
+        }
+
+        .swal2-title {
+            color: white !important;
+            font-size: 1.5rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .swal2-html-container {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-size: 1rem !important;
+            margin: 1rem 0 !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 1.5rem !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3) !important;
+        }
+
+        .swal2-cancel {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 1.5rem !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swal2-cancel:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .swal2-icon {
+            border: none !important;
+            margin: 1rem auto !important;
+        }
+
+        .swal2-success {
+            background: rgba(74, 222, 128, 0.2) !important;
+        }
+
+        .swal2-error {
+            background: rgba(244, 63, 94, 0.2) !important;
+        }
+
+        .swal2-warning {
+            background: rgba(251, 191, 36, 0.2) !important;
+        }
+
+        .swal2-info {
+            background: rgba(67, 97, 238, 0.2) !important;
+        }
+
+        
+        .hamburger-menu {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(67, 97, 238, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .hamburger-menu .bar {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger-menu.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                width: 80%;
+                height: 100vh;
+                z-index: 999;
+                transition: all 0.3s ease;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .admin-container {
+                padding-top: 0;
+            }
+
+            .chat-container, .no-chat-selected {
+                width: 100%;
+                margin-left: 0;
+            }
+
+           
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+                backdrop-filter: blur(3px);
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                background: #f8fafc;
+            }
+
+            .chat-header {
+                padding: 12px 15px;
+                background: #1a1a2e;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .chat-messages {
+                flex: 1;
+                padding: 15px;
+                overflow-y: auto;
+                background: #f8fafc;
+            }
+
+            .message {
+                max-width: 85%;
+                padding: 12px 15px;
+                margin-bottom: 20px;
+                position: relative;
+            }
+
+            .message.user-message {
+                margin-right: auto;
+                background: white;
+                border-radius: 15px 15px 15px 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            }
+
+            .message.owner-message {
+                margin-left: auto;
+                background: linear-gradient(135deg, #4361ee, #3a0ca3);
+                border-radius: 15px 15px 5px 15px;
+                color: white;
+            }
+
+            .message .sender {
+                font-size: 13px;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+
+            .message .content {
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 15px;
+                word-wrap: break-word;
+            }
+
+            .message .time {
+                position: absolute;
+                bottom: 8px;
+                right: 12px;
+                font-size: 11px;
+                opacity: 0.8;
+            }
+
+            .chat-input {
+                padding: 12px;
+                background: white;
+                border-top: 1px solid #e2e8f0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                position: sticky;
+                bottom: 0;
+            }
+
+            .chat-input input {
+                flex: 1;
+                padding: 12px 15px;
+                border-radius: 20px;
+                border: 1px solid #e2e8f0;
+                background: #f8fafc;
+                font-size: 14px;
+            }
+
+            .chat-input button {
+                padding: 12px 20px;
+                border-radius: 20px;
+                background: linear-gradient(135deg, #4361ee, #3a0ca3);
+                color: white;
+                font-weight: 500;
+                border: none;
+            }
+
+            .upload-image-btn {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: rgba(67, 97, 238, 0.1);
+                color: #4361ee;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+           
+            .user-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #4361ee, #3a0ca3);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+            }
+
+            .user-details h3 {
+                color: white;
+                font-size: 16px;
+                margin: 0;
+            }
+
+            .user-details p {
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 12px;
+                margin: 2px 0 0 0;
+            }
+
+            .actions {
+                display: flex;
+                gap: 8px;
+            }
+
+            .actions button {
+                padding: 8px 12px;
+                border-radius: 8px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            #backBtn {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            #endChatBtn {
+                background: rgba(239, 68, 68, 0.2);
+                color: #fecaca;
+                border: 1px solid rgba(239, 68, 68, 0.3);
+            }
+
+         
+            .connection-status {
+                position: fixed;
+                bottom: 75px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(26, 26, 46, 0.9);
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                z-index: 1000;
+            }
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <!-- Login Container -->
+  
     <div class="login-container" id="loginContainer">
         <div class="login-box">
             <h2>Admin Login</h2>
@@ -866,6 +2212,25 @@
             <div class="logo">
                 <img src="https://files.catbox.moe/qc4knm.jpg" alt="Vonix PS Logo">
                 <h2>Vonix PS Admin</h2>
+            </div>
+            
+            
+            <div class="server-status-panel">
+                <h3><i class="fas fa-server"></i> Status Server</h3>
+                <div class="status-controls">
+                    <button class="status-btn online-btn" onclick="setServerStatus('online', 'Server: Online')">
+                        <div class="status-color online"></div>
+                        <span>Online</span>
+                    </button>
+                    <button class="status-btn offline-btn" onclick="setServerStatus('offline', 'Server: Offline')">
+                        <div class="status-color offline"></div>
+                        <span>Offline</span>
+                    </button>
+                    <button class="status-btn maintenance-btn" onclick="setServerStatus('maintenance', 'Server: Maintenance')">
+                        <div class="status-color maintenance"></div>
+                        <span>Maintenance</span>
+                    </button>
+                </div>
             </div>
             
             <h3>Percakapan Aktif</h3>
@@ -896,6 +2261,14 @@
                     <button id="endChatBtn"><i class="fas fa-times"></i> Tutup Percakapan</button>
                     <button onclick="logout()" style="background-color: #ef4444; color: white;"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </div>
+
+               
+                <div class="server-status-manager">
+                    <button id="toggleServerStatus" class="server-status-btn online">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Server: Online</span>
+                    </button>
+                </div>
             </div>
             
             <div class="chat-messages" id="chatMessages">
@@ -922,6 +2295,55 @@
         <div class="close-preview" id="closeImagePreview">&times;</div>
         <img src="" alt="Preview" class="preview-image" id="previewImage">
     </div>
+    
+   
+    <div class="status-modal" id="statusModal">
+        <div class="status-modal-content">
+            <div class="status-modal-header">
+                <h3>Atur Status Server</h3>
+                <span class="close-status-modal">&times;</span>
+            </div>
+            <div class="status-modal-body">
+                <div class="status-option" data-status="online">
+                    <div class="status-dot online"></div>
+                    <div class="status-details">
+                        <h4>Online</h4>
+                        <p>Server berjalan normal</p>
+                    </div>
+                </div>
+                <div class="status-option" data-status="maintenance">
+                    <div class="status-dot maintenance"></div>
+                    <div class="status-details">
+                        <h4>Maintenance</h4>
+                        <p>Server sedang dalam pemeliharaan</p>
+                    </div>
+                </div>
+                <div class="status-option" data-status="offline">
+                    <div class="status-dot offline"></div>
+                    <div class="status-details">
+                        <h4>Offline</h4>
+                        <p>Server tidak tersedia</p>
+                    </div>
+                </div>
+                <div class="status-message">
+                    <label for="customStatusMessage">Pesan Status Kustom:</label>
+                    <input type="text" id="customStatusMessage" placeholder="Server: Online" value="Server: Online">
+                </div>
+            </div>
+            <div class="status-modal-footer">
+                <button id="cancelStatusChange">Batal</button>
+                <button id="saveStatusChange">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -1764,33 +3186,491 @@
             const errorMessage = document.getElementById('errorMessage');
             const adminContent = document.querySelector('.admin-container');
 
-           
+            // Cek status login saat halaman dimuat
             if (!localStorage.getItem('adminLoggedIn')) {
+                console.log('User belum login, menampilkan form login');
                 loginContainer.style.display = 'flex';
                 adminContent.style.display = 'none';
+            } else {
+                console.log('User sudah login, menampilkan admin panel');
+                loginContainer.style.display = 'none';
+                adminContent.style.display = 'flex';
             }
 
+            // Handle form login
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
+                console.log('Mencoba login dengan username:', username);
+
                 if (username === 'kuzuroken' && password === '@kuzuroken#4') {
+                    console.log('Login berhasil');
                     localStorage.setItem('adminLoggedIn', 'true');
                     loginContainer.style.display = 'none';
                     adminContent.style.display = 'flex';
                     errorMessage.style.display = 'none';
                 } else {
+                    console.log('Login gagal');
                     errorMessage.style.display = 'block';
                     localStorage.removeItem('adminLoggedIn');
                 }
             });
         });
 
+     
         function logout() {
+            console.log('User logout');
             localStorage.removeItem('adminLoggedIn');
             window.location.reload();
         }
+
+     
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleServerStatusBtn = document.getElementById('toggleServerStatus');
+            const statusModal = document.getElementById('statusModal');
+            const closeStatusModal = document.querySelector('.close-status-modal');
+            const statusOptions = document.querySelectorAll('.status-option');
+            const cancelStatusChange = document.getElementById('cancelStatusChange');
+            const saveStatusChange = document.getElementById('saveStatusChange');
+            const customStatusMessage = document.getElementById('customStatusMessage');
+            
+            let currentStatus = 'online';
+            let currentMessage = 'Server: Online';
+            
+         
+            database.ref('serverStatus').once('value', (snapshot) => {
+                const serverStatus = snapshot.val() || { status: 'online', message: 'Server: Online' };
+                currentStatus = serverStatus.status;
+                currentMessage = serverStatus.message;
+                
+               
+                updateStatusButton(currentStatus, currentMessage);
+            
+                statusOptions.forEach(option => {
+                    if(option.getAttribute('data-status') === currentStatus) {
+                        option.classList.add('selected');
+                    }
+                });
+             
+                customStatusMessage.value = currentMessage;
+            });
+            
+          
+            toggleServerStatusBtn.addEventListener('click', function() {
+                statusModal.style.display = 'block';
+                setTimeout(() => {
+                    statusModal.classList.add('show');
+                }, 10);
+            });
+            
+           
+            function closeModal() {
+                statusModal.classList.remove('show');
+                setTimeout(() => {
+                    statusModal.style.display = 'none';
+                }, 300);
+            }
+            
+            closeStatusModal.addEventListener('click', closeModal);
+            cancelStatusChange.addEventListener('click', closeModal);
+          
+            window.addEventListener('click', function(event) {
+                if (event.target === statusModal) {
+                    closeModal();
+                }
+            });
+            
+       
+            statusOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                  
+                    statusOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    this.classList.add('selected');
+                 
+                    currentStatus = this.getAttribute('data-status');
+               
+                    if (currentStatus === 'online') {
+                        customStatusMessage.value = 'Server: Online';
+                    } else if (currentStatus === 'maintenance') {
+                        customStatusMessage.value = 'Server: Maintenance';
+                    } else if (currentStatus === 'offline') {
+                        customStatusMessage.value = 'Server: Offline';
+                    }
+                    
+                    currentMessage = customStatusMessage.value;
+                });
+            });
+            
+          
+            saveStatusChange.addEventListener('click', function() {
+               
+                currentMessage = customStatusMessage.value.trim() || 'Server: ' + currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1);
+               
+                database.ref('serverStatus').set({
+                    status: currentStatus,
+                    message: currentMessage,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    console.log('Status server berhasil diperbarui');
+                    
+              
+                    updateStatusButton(currentStatus, currentMessage);
+                 
+                    closeModal();
+                }).catch(error => {
+                    console.error('Error saat memperbarui status server:', error);
+                    alert('Gagal memperbarui status server. Silakan coba lagi.');
+                });
+            });
+            
+           
+            function updateStatusButton(status, message) {
+              
+                toggleServerStatusBtn.classList.remove('online', 'maintenance', 'offline');
+                
+                toggleServerStatusBtn.classList.add(status);
+              
+                toggleServerStatusBtn.querySelector('.status-text').textContent = message;
+            }
+        });
+
+       
+        function setServerStatus(status, message) {
+           
+            const serverStatusRef = firebase.database().ref('serverStatus');
+      
+            serverStatusRef.set({
+                status: status,
+                message: message
+            }).then(() => {
+                alert(`Status server berhasil diubah menjadi ${message}`);
+            }).catch((error) => {
+                alert(`Error: ${error.message}`);
+            });
+        }
+        
+    
+        function applyCustomStatus() {
+            const customMessage = document.getElementById('customStatusMessage').value.trim();
+            if (!customMessage) {
+                alert('Mohon masukkan pesan status kustom');
+                return;
+            }
+     
+            const activeStatus = document.querySelector('.status-btn.active');
+            let status = 'online'; 
+            
+          
+            if (activeStatus) {
+                if (activeStatus.classList.contains('online-btn')) {
+                    status = 'online';
+                } else if (activeStatus.classList.contains('offline-btn')) {
+                    status = 'offline';
+                } else if (activeStatus.classList.contains('maintenance-btn')) {
+                    status = 'maintenance';
+                }
+            }
+            
+       
+            setServerStatus(status, customMessage);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusBtns = document.querySelectorAll('.status-btn');
+            
+            statusBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                
+                    statusBtns.forEach(b => b.classList.remove('active'));
+                  
+                    this.classList.add('active');
+                });
+            });
+            
+          
+            firebase.database().ref('serverStatus').once('value', (snapshot) => {
+                const serverStatus = snapshot.val() || { status: 'online', message: 'Server: Online' };
+                
+              
+                if (serverStatus.status === 'online') {
+                    document.querySelector('.online-btn').classList.add('active');
+                } else if (serverStatus.status === 'offline') {
+                    document.querySelector('.offline-btn').classList.add('active');
+                } else if (serverStatus.status === 'maintenance') {
+                    document.querySelector('.maintenance-btn').classList.add('active');
+                }
+                
+              
+                if (serverStatus.message !== 'Server: Online' && 
+                    serverStatus.message !== 'Server: Offline' && 
+                    serverStatus.message !== 'Server: Maintenance') {
+                    document.getElementById('customStatusMessage').value = serverStatus.message;
+                }
+            });
+        });
+
+        const statusModal = document.getElementById('statusModal');
+        const closeStatusModal = document.querySelector('.close-status-modal');
+        const statusOptions = document.querySelectorAll('.status-option');
+        const customMessageInput = document.getElementById('customStatusMessage');
+        const saveStatusBtn = document.getElementById('saveStatusChange');
+        const cancelStatusBtn = document.getElementById('cancelStatusChange');
+
+        let currentStatus = 'online';
+
+        function showStatusModal() {
+            statusModal.style.display = 'flex';
+            setTimeout(() => {
+                statusModal.classList.add('show');
+            }, 10);
+        }
+
+      
+        function hideStatusModal() {
+            statusModal.classList.remove('show');
+            setTimeout(() => {
+                statusModal.style.display = 'none';
+            }, 300);
+        }
+
+        statusOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                statusOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                currentStatus = option.dataset.status;
+            });
+        });
+
+       
+        closeStatusModal.addEventListener('click', hideStatusModal);
+        cancelStatusBtn.addEventListener('click', hideStatusModal);
+
+       
+        saveStatusBtn.addEventListener('click', () => {
+            const customMessage = customMessageInput.value.trim();
+            const statusText = document.getElementById('statusText');
+            const statusIndicator = document.querySelector('.server-status .status-indicator');
+            
+           
+            statusIndicator.className = 'status-indicator ' + currentStatus;
+            
+            
+            let statusMessage = '';
+            switch(currentStatus) {
+                case 'online':
+                    statusMessage = 'Server Online';
+                    break;
+                case 'maintenance':
+                    statusMessage = 'Server Maintenance';
+                    break;
+                case 'offline':
+                    statusMessage = 'Server Offline';
+                    break;
+            }
+            
+            if (customMessage) {
+                statusMessage += ': ' + customMessage;
+            }
+            
+            statusText.textContent = statusMessage;
+            
+          
+            hideStatusModal();
+            
+        
+            showNotification('Status server berhasil diperbarui', 'success');
+        });
+
+     
+        window.addEventListener('click', (e) => {
+            if (e.target === statusModal) {
+                hideStatusModal();
+            }
+        });
+
+     
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = document.createElement('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
+            
+            const text = document.createElement('span');
+            text.textContent = message;
+            
+            notification.appendChild(icon);
+            notification.appendChild(text);
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+      
+        const style = document.createElement('style');
+        style.textContent = `
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 2100;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left: 4px solid #4ade80;
+        }
+
+        .notification.info {
+            border-left: 4px solid #4361ee;
+        }
+
+        .notification i {
+            font-size: 20px;
+        }
+
+        .notification.success i {
+            color: #4ade80;
+        }
+
+        .notification.info i {
+            color: #4361ee;
+        }
+        `;
+        document.head.appendChild(style);
+
+     
+        function setServerStatus(status, message) {
+            let icon, title, confirmButtonText;
+            
+            switch(status) {
+                case 'online':
+                    icon = 'success';
+                    title = 'Atur Status Server';
+                    confirmButtonText = 'Aktifkan Server';
+                    break;
+                case 'maintenance':
+                    icon = 'warning';
+                    title = 'Mode Maintenance';
+                    confirmButtonText = 'Aktifkan Maintenance';
+                    break;
+                case 'offline':
+                    icon = 'error';
+                    title = 'Nonaktifkan Server';
+                    confirmButtonText = 'Nonaktifkan';
+                    break;
+            }
+
+            Swal.fire({
+                icon: icon,
+                title: title,
+                html: `
+                    <div style="text-align: left; margin-bottom: 1rem;">
+                        <p style="margin-bottom: 1rem;">Apakah Anda yakin ingin mengubah status server menjadi:</p>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
+                            <strong style="color: #4ade80">${message}</strong>
+                        </div>
+                        <input type="text" id="customMessage" class="swal2-input" placeholder="Pesan tambahan (opsional)" 
+                            style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; margin-top: 1rem;">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: 'Batal',
+                backdrop: 'rgba(0,0,0,0.7)',
+                customClass: {
+                    container: 'modern-swal'
+                },
+                preConfirm: () => {
+                    const customMsg = document.getElementById('customMessage').value;
+                    return customMsg ? `${message} - ${customMsg}` : message;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                   
+                    const serverStatusRef = firebase.database().ref('serverStatus');
+                    serverStatusRef.set({
+                        status: status,
+                        message: result.value,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    }).then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Status Diperbarui!',
+                            text: 'Status server berhasil diubah',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }).catch((error) => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: `Error: ${error.message}`,
+                        });
+                    });
+                }
+            });
+        }
+
+     
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            function toggleSidebar() {
+                hamburgerMenu.classList.toggle('active');
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+                document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            }
+
+            hamburgerMenu.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            
+            const userItems = document.querySelectorAll('.user-item');
+            userItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+           
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+                    toggleSidebar();
+                }
+            });
+        });
+
     </script>
 </body>
 </html> 

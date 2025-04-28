@@ -72,6 +72,7 @@ body::-webkit-scrollbar {
     overflow: hidden !important;
     touch-action: none;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
 }
 
 .profile {
@@ -145,12 +146,63 @@ body::-webkit-scrollbar {
     text-shadow: 0 0 10px currentColor, 0 0 15px currentColor;
 }
 @keyframes soft-rgb {
-    0% { color: #ff5555; }
-    20% { color: #ffaa55; }
-    40% { color: #aaff55; }
-    60% { color: #55ffaa; }
-    80% { color: #55aaff; }
-    100% { color: #ff5555; }
+    0% { color: #ffffff; }
+    25% { color: #a6c1ff; }
+    50% { color: #ffd5e5; }
+    75% { color: #ffe0a6; }
+    100% { color: #ffffff; }
+}
+
+/* Keyframes untuk efek RGB yang smooth dan konsisten untuk semua teks */
+@keyframes vonix-uniform-rgb {
+    0% { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.7); }
+    20% { color: #ffff00; text-shadow: 0 0 8px rgba(255, 255, 0, 0.7); }
+    40% { color: #ff0000; text-shadow: 0 0 8px rgba(255, 0, 0, 0.7); }
+    60% { color: #00ffff; text-shadow: 0 0 8px rgba(0, 255, 255, 0.7); }
+    80% { color: #0000ff; text-shadow: 0 0 8px rgba(0, 0, 255, 0.7); }
+    100% { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.7); }
+}
+
+/* Terapkan pada teks "AYO BERGABUNG DI SERVER VONIX PS" */
+.profile p b {
+    display: inline-block;
+    color: #ffffff;
+    text-shadow: 0 0 8px currentColor;
+    animation: vonix-uniform-rgb 20s linear infinite; /* Lebih lambat dan linear untuk transisi lebih smooth */
+    font-weight: bold;
+}
+
+/* Terapkan efek RGB pada semua link menu dengan animasi yang sama */
+.link span {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    animation: vonix-uniform-rgb 20s linear infinite; /* Lebih lambat dan linear untuk transisi lebih smooth */
+    font-weight: 500;
+}
+
+/* Pastikan semua link memiliki animasi yang sama */
+.links a span {
+    animation: vonix-uniform-rgb 20s linear infinite;
+}
+
+/* Hapus animasi berbeda untuk setiap link */
+.links a:nth-child(1) span,
+.links a:nth-child(2) span,
+.links a:nth-child(3) span,
+.links a:nth-child(4) span {
+    animation: vonix-uniform-rgb 15s ease infinite;
+    animation-delay: 0s; /* Semua memiliki timing yang sama */
+}
+
+/* Tambahkan animasi RGB yang lebih lambat untuk teks bergabung */
+@keyframes slow-rgb-text {
+    0% { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
+    25% { color: #ff9acd; text-shadow: 0 0 10px #ff9acd; }
+    50% { color: #a6c1ff; text-shadow: 0 0 10px #a6c1ff; }
+    75% { color: #ffd5e5; text-shadow: 0 0 10px #ffd5e5; }
+    100% { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
 }
 
 .profile p {
@@ -160,8 +212,31 @@ body::-webkit-scrollbar {
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
-    animation: soft-rgb 10s ease infinite; 
+    animation: slow-rgb-text 8s ease infinite; /* Animasi lebih lambat - 8 detik */
     font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.profile p b {
+    display: inline-block;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 154, 205, 0.9),
+        rgba(166, 193, 255, 0.9),
+        rgba(255, 213, 229, 0.9),
+        rgba(255, 255, 255, 0.9)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 400% 100%;
+    animation: slow-gradient 12s linear infinite; /* Animasi sangat lambat - 12 detik */
+}
+
+@keyframes slow-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .links {
@@ -216,14 +291,6 @@ body::-webkit-scrollbar {
     margin-right: 15px;
     border-radius: 8px;
     object-fit: cover;
-}
-.link span {
-    flex: 1;
-    text-align: left;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    animation: soft-rgb 10s ease infinite; 
-    font-weight: 500;
 }
 
 .social-icons {
@@ -882,11 +949,12 @@ body.light-theme .theme-switch i {
     flex-direction: column;
     gap: 12px;
     background-image: url('https://files.catbox.moe/qrg6e6.jpg');
-    background-size: 200px;
-    background-repeat: repeat;
+    background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     background-blend-mode: overlay;
     background-color: rgba(30, 30, 60, 0.5);
+    scroll-behavior: smooth;
 }
 
 .bot-message, .user-message {
@@ -894,7 +962,8 @@ body.light-theme .theme-switch i {
     padding: 12px 16px;
     border-radius: 18px;
     margin-bottom: 5px;
-    animation: fadeInMessage 0.3s ease-in-out;
+    animation: messageSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 14px;
     line-height: 1.4;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -902,10 +971,10 @@ body.light-theme .theme-switch i {
     white-space: pre-wrap;
 }
 
-@keyframes fadeInMessage {
+@keyframes messageSlideIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -932,8 +1001,11 @@ body.light-theme .theme-switch i {
 .chatbot-input {
     padding: 15px;
     display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(40, 40, 80, 0.95);
+    backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(40, 40, 80, 0.8);
 }
 
 .chatbot-input input {
@@ -941,40 +1013,65 @@ body.light-theme .theme-switch i {
     border: none;
     background: rgba(255, 255, 255, 0.15);
     border-radius: 30px;
-    padding: 12px 18px;
+    padding: 12px 20px;
     color: white;
+    font-size: 14px;
     outline: none;
     font-family: 'Poppins', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.chatbot-input input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+.chatbot-input input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(156, 66, 245, 0.3);
+    transform: translateY(-1px);
 }
 
 .chatbot-input button {
-    background: linear-gradient(135deg, #6a3093, #a044ff);
-    color: white;
+    min-width: 45px;
+    height: 45px;
     border: none;
-    width: 44px;
-    height: 44px;
     border-radius: 50%;
-    margin-left: 10px;
+    background: linear-gradient(135deg, #9C42F5, #7D56F6);
+    color: white;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(156, 66, 245, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
 .chatbot-input button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(156, 66, 245, 0.4);
+    background: linear-gradient(135deg, #7D56F6, #9C42F5);
+}
+
+.chatbot-input button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chatbot-input button:hover::after {
+    transform: rotate(45deg) translate(50%, 50%);
 }
 
 .chatbot-input button i {
-    font-size: 18px;
+    font-size: 20px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
 .chatbot-messages::-webkit-scrollbar {
@@ -1053,7 +1150,7 @@ body.light-theme .theme-switch i {
 .share-toggle {
     position: fixed;
     top: 20px;
-    left: 20px;
+    left: 10px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -1082,7 +1179,7 @@ body.light-theme .theme-switch i {
 .share-dropdown {
     position: fixed;
     top: 70px;
-    left: 20px;
+    left: 10px;
     width: 180px;
     background: rgba(30, 40, 100, 0.8);
     border-radius: 16px;
@@ -1241,7 +1338,7 @@ body.light-theme .theme-switch i {
 .owner-chat-container {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    left: 10px;
     z-index: 1000;
     font-family: 'Poppins', sans-serif;
 }
@@ -1267,7 +1364,7 @@ body.light-theme .theme-switch i {
     animation: pulse 2s infinite;
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    left: 10px;
     z-index: 10;
 }
 
@@ -1284,7 +1381,7 @@ body.light-theme .theme-switch i {
 .owner-chat-box {
     position: fixed;
     bottom: 100px;
-    left: 20px;
+    left: 10px;
     width: 350px;
     max-width: 90vw;
     height: 450px;
@@ -1457,7 +1554,7 @@ body.light-theme .theme-switch i {
     transform: rotate(45deg) translate(50%, 50%);
 }
 
-/* Animasi untuk chatbot dan owner chat icons */
+
 .chatbot-icon, .owner-chat-icon {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1492,7 +1589,7 @@ body.light-theme .theme-switch i {
     }
 }
 
-/* Smooth animation untuk semua tombol */
+
 .link, .social-icon, .audio-control, .theme-switch {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1501,7 +1598,6 @@ body.light-theme .theme-switch i {
     transform: translateY(-5px);
 }
 
-/* Efek hover yang lebih smooth untuk tombol */
 .chatbot-icon:hover, .owner-chat-icon:hover {
     transform: scale(1.1) translateY(-3px);
     box-shadow: 0 10px 25px rgba(156, 66, 245, 0.4);
@@ -1859,4 +1955,123 @@ body.light-theme .theme-switch i {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+}
+
+* {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+
+.container {
+    scroll-behavior: smooth;
+}
+
+
+.popup-overlay, .name-change-dialog {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.popup-container, .name-change-container {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+.link, .social-icon, .audio-control, .theme-switch, .share-toggle {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link:hover, .social-icon:hover, .audio-control:hover, .theme-switch:hover, .share-toggle:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+.links a:nth-child(1) span {
+    animation: vonix-uniform-rgb 15s ease infinite;
+}
+
+.links a:nth-child(2) span {
+    animation: vonix-uniform-rgb 15s ease infinite;
+}
+
+.links a:nth-child(3) span {
+    animation: vonix-uniform-rgb 15s ease infinite;
+}
+
+.links a:nth-child(4) span {
+    animation: vonix-uniform-rgb 15s ease infinite;
+}
+
+
+.server-status {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.server-status:hover {
+    transform: translateX(-50%) translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.server-status .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation: pulse-status 2s infinite;
+}
+
+#statusText {
+    display: inline-block;
+    margin: 0;
+    font-size: 13px;
+    color: #fff;
+}
+
+@keyframes pulse-status {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.server-status .status-indicator.online {
+    background-color: #4ade80;
+    box-shadow: 0 0 10px #4ade80;
+}
+
+.server-status .status-indicator.offline {
+    background-color: #f43f5e;
+    box-shadow: 0 0 10px #f43f5e;
+}
+
+.server-status .status-indicator.maintenance {
+    background-color: #fbbf24;
+    box-shadow: 0 0 10px #fbbf24;
+}
+
+body.light-theme .server-status {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--dark-color);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 }
