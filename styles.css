@@ -62,10 +62,9 @@ body::-webkit-scrollbar {
 }
 
 .container {
-    max-width: 600px;
-    width: 95%;
-    margin: 0 auto;
-    padding: 0 10px;
+    max-width: 100%; /* Menghindari overflow */
+    width: 100%; /* Memastikan lebar 100% */
+    padding: 0 10px; /* Padding untuk ruang */
     text-align: center;
     position: relative;
     z-index: 2;
@@ -79,6 +78,7 @@ body::-webkit-scrollbar {
 .profile {
     margin-top: 40px;
     position: relative;
+    width: 100%; /* Memastikan lebar 100% */
 }
 
 .profile-img-container {
@@ -105,8 +105,9 @@ body::-webkit-scrollbar {
 
 .profile-img-container img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
+    max-width: 100%; /* Memastikan gambar responsif */
 }
 
 .profile-img-container::after {
@@ -244,7 +245,7 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 100%;
+    width: 100%; /* Memastikan lebar 100% */
 }
 
 .link {
@@ -262,6 +263,7 @@ body::-webkit-scrollbar {
     backdrop-filter: blur(5px);
     position: relative;
     overflow: hidden;
+    width: 100%; /* Memastikan link mengisi lebar */
 }
 
 .link:before {
@@ -895,7 +897,8 @@ body.light-theme .theme-switch i {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 350px;
+    width: 100%; /* Memastikan lebar 100% */
+    max-width: 100%; /* Menghindari overflow */
     height: 450px;
     background: linear-gradient(145deg, rgba(37, 34, 89, 0.92), rgba(71, 44, 129, 0.92));
     backdrop-filter: blur(10px);
@@ -1395,8 +1398,8 @@ body.light-theme .theme-switch i {
     position: fixed;
     bottom: 100px;
     left: 10px;
-    width: 350px;
-    max-width: 90vw;
+    width: 100%; /* Memastikan lebar 100% */
+    max-width: 100%; /* Menghindari overflow */
     height: 450px;
     background: rgba(44, 45, 77, 0.95);
     border-radius: 20px;
@@ -2339,8 +2342,8 @@ body.light-theme .apk-desc {
 
 
 .apk-modal-container {
-    max-width: 95vw;
-    width: 95vw;
+    max-width: 90%; /* Memastikan modal tidak terlalu lebar */
+    max-width: 90%; /* Menghindari overflow */
     background: linear-gradient(135deg, rgba(37, 34, 89, 0.97), rgba(71, 44, 129, 0.97));
     border-radius: 22px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.7);
@@ -2728,5 +2731,41 @@ body.light-theme .apk-desc {
         right: 8px;
         padding: 12px 18px 12px 14px;
         font-size: 0.98em;
+    }
+}
+
+/* Media Queries untuk perangkat mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px; /* Mengurangi padding untuk perangkat kecil */
+    }
+
+    .profile {
+        flex-direction: column; /* Mengubah arah flex menjadi kolom */
+        align-items: center; /* Menyelaraskan item di tengah */
+    }
+
+    .links {
+        flex-direction: column; /* Mengubah arah flex menjadi kolom */
+        align-items: stretch; /* Memastikan link mengisi lebar */
+    }
+
+    .link {
+        margin: 10px 0; /* Menambahkan margin vertikal antar link */
+        width: 100%; /* Memastikan link mengisi lebar */
+    }
+
+    .video-background video {
+        width: 100%; /* Memastikan video responsif */
+        height: auto; /* Menjaga rasio aspek video */
+    }
+
+    .chatbot-container, .owner-chat-container {
+        width: 100%; /* Memastikan chat container mengisi lebar */
+        max-width: 100%; /* Menghindari overflow */
+    }
+
+    .apk-modal-container {
+        width: 90%; /* Memastikan modal tidak terlalu lebar */
     }
 }
