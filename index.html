@@ -67,6 +67,12 @@
                 <img src="https://files.catbox.moe/a0yy9p.png" alt="WhatsApp Icon">
                 <span>WhatsApp Vonix</span>
             </a>
+            
+            
+            <button id="openApkModalBtn" class="link" style="margin-top: 20px; margin-bottom: 15px; border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 10px rgba(108, 92, 231, 0.2); position: relative; transition: all 0.4s ease; width: 100%;">
+                <i class="fas fa-download" style="color: #a29bfe; font-size: 20px; margin-right: 12px;"></i>
+                    <span style="flex: 1; text-align: left; font-size: 16px; font-weight: 500; letter-spacing: 0.5px; color: white;">APK Host Downloads</span>
+            </button>
         </div>
         <div class="share-toggle" id="shareToggle">
             <i class="fas fa-ellipsis-v"></i>
@@ -107,14 +113,12 @@
                 <img src="https://files.catbox.moe/m18sf6.png" alt="TikTok Icon">
             </div>
         </div>
-        
-        <!-- Server Status Indicator -->
-        <div class="server-status" id="serverStatus">
-            <div class="status-indicator online" id="statusIndicator"></div>
-            <span id="statusText">Server: Online</span>
-        </div>
     </div>
     
+    <div id="serverStatusNotif" class="server-status-notif" style="display:none;">
+        <i class="fas fa-server"></i>
+        <span id="serverStatusNotifText">Server: Online</span>
+    </div>
 
     <div class="popup-overlay" id="wa-popup">
         <div class="popup-container">
@@ -230,6 +234,54 @@
             </div>
         </div>
     </div>
+
+    <div class="popup-overlay" id="apkModal">
+        <div class="popup-container apk-modal-container">
+            <div class="popup-header">
+                <h3>APK Downloads</h3>
+                <i class="fas fa-times close-popup" id="closeApkModal"></i>
+            </div>
+            <div class="popup-content apk-modal-content">
+                
+                <a href="https://sfile.mobi/8XuJpKEqL6W" class="apk-item">
+                    <div class="apk-icon">
+                        <img src="https://play-lh.googleusercontent.com/-3C_GP8rFSyU84jrnhrn4O5mPiqPj3XuyNhGh5L8z-G5Wk8snKtYtmZ7R0sCxsmXKGzL=w600-h300-pc0xffffff-pd" alt="Virtual HOSTS Icon">
+                        <span class="apk-badge">Rekomendasi</span>
+                    </div>
+                    <div class="apk-info">
+                        <div class="apk-name">APK Virtual HOSTS</div>
+                        <div class="apk-desc">Saran Untuk GTPS</div>
+                    </div>
+                    <div class="apk-download-btn"><i class="fas fa-download"></i></div>
+                </a>
+                <a href="https://sfile.mobi/2wAFRSHHTOQ" class="apk-item">
+                    <div class="apk-icon"><img src="https://images.sftcdn.net/images/t_app-icon-m/p/0aef4e63-c487-4875-b103-bf30528aaf72/383420525/no-root-hosts-go-logo" alt="Hosts GO Icon"></div>
+                    <div class="apk-info">
+                        <div class="apk-name">APK Hosts GO</div>
+                        <div class="apk-desc">Lumayan Untuk GTPS</div>
+                    </div>
+                    <div class="apk-download-btn"><i class="fas fa-download"></i></div>
+                </a>
+                <a href="https://sfile.mobi/1zuFlBKK6Qw" class="apk-item">
+                    <div class="apk-icon"><img src="https://raw.githubusercontent.com/krlvm/PowerTunnel/master/.github/images/logo.png" alt="Power Tunnel Icon"></div>
+                    <div class="apk-info">
+                        <div class="apk-name">APK Power Tunnel</div>
+                        <div class="apk-desc">Cocok Untuk GTPS</div>
+                    </div>
+                    <div class="apk-download-btn"><i class="fas fa-download"></i></div>
+                </a>
+            </div>
+            <div class="apk-modal-footer">
+                <a href="https://wa.me/6281527641306" class="apk-footer-btn wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Owner</a>
+                <a href="https://www.tiktok.com/@orenni" class="apk-footer-btn tiktok" target="_blank"><i class="fab fa-tiktok"></i> TikTok Owner</a>
+            </div>
+        </div>
+    </div>
+    
+  
+    <style>
+    .apk-downloads-tab { display: none !important; }
+    </style>
     
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>

@@ -1968,3 +1968,227 @@ document.addEventListener('DOMContentLoaded', function() {
     initServerStatus();
  
 });
+
+function initApkDownloadsTab() {
+    const apkTabHeader = document.getElementById('apkTabHeader');
+    const apkTabContent = document.getElementById('apkTabContent');
+    const apkItems = document.querySelectorAll('.apk-item');
+    
+    if (!apkTabHeader || !apkTabContent) return;
+    
+ 
+    const shouldBeOpen = localStorage.getItem('vonix_apk_tab_open') === 'true';
+    
+    if (shouldBeOpen) {
+        apkTabHeader.classList.add('active');
+        apkTabContent.classList.add('active');
+        
+      
+        const chevronIcon = apkTabHeader.querySelector('.fa-chevron-down');
+        if (chevronIcon) {
+            chevronIcon.style.transform = 'rotate(180deg)';
+        }
+        
+    
+        setTimeout(() => {
+            apkTabContent.style.maxHeight = apkTabContent.scrollHeight + 'px';
+            
+          
+            animateApkItemsInline(apkItems);
+        }, 300);
+    }
+    
+
+    apkTabHeader.addEventListener('click', function() {
+        this.classList.toggle('active');
+        
+        
+        const chevronIcon = this.querySelector('.fa-chevron-down');
+        if (chevronIcon) {
+            chevronIcon.style.transform = this.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+        
+        if (this.classList.contains('active')) {
+           
+            apkTabContent.classList.add('active');
+            apkTabContent.style.maxHeight = apkTabContent.scrollHeight + 'px';
+            localStorage.setItem('vonix_apk_tab_open', 'true');
+            
+          
+            animateApkItemsInline(apkItems);
+        } else {
+           
+            apkTabContent.classList.remove('active');
+            apkTabContent.style.maxHeight = '0';
+            localStorage.setItem('vonix_apk_tab_open', 'false');
+        }
+    });
+    
+
+    apkItems.forEach(item => {
+        setupApkItemInteractionsInline(item);
+    });
+    
+   
+    if (!localStorage.getItem('vonix_apk_tab_seen')) {
+        setTimeout(() => {
+            
+            apkTabHeader.style.boxShadow = '0 0 0 5px rgba(108, 92, 231, 0.7)';
+            
+            setTimeout(() => {
+               
+                apkTabHeader.style.boxShadow = 'none';
+            }, 3000);
+            
+            localStorage.setItem('vonix_apk_tab_seen', 'true');
+        }, 1500);
+    }
+}
+
+function animateApkItemsInline(items) {
+    items.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            item.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+        }, 100 + (index * 100));
+    });
+}
+
+function setupApkItemInteractionsInline(item) {
+    const downloadBtn = item.querySelector('.apk-download-btn');
+    
+    if (downloadBtn) {
+        item.addEventListener('mouseenter', function() {
+            downloadBtn.style.transform = 'scale(1.1)';
+            
+            downloadBtn.style.boxShadow = '0 8px 25px rgba(108, 92, 231, 0.6)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            downloadBtn.style.transform = 'scale(1)';
+            
+            downloadBtn.style.boxShadow = '0 5px 15px rgba(108, 92, 231, 0.4)';
+        });
+    }
+    
+   
+    item.addEventListener('click', function(e) {
+     
+        const rect = this.getBoundingClientRect();
+        const x = (rect.left + rect.right) / 2 / window.innerWidth;
+        const y = (rect.top + rect.bottom) / 2 / window.innerHeight;
+        
+        confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y, x },
+            colors: ['#ff6b6b', '#7d56f6', '#6c5ce7', '#a29bfe']
+        });
+        
+       
+        const apkName = this.querySelector('.apk-name').textContent;
+        localStorage.setItem('vonix_last_downloaded_apk', apkName);
+        localStorage.setItem('vonix_last_download_time', new Date().toISOString());
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    initApkDownloadsTab();
+    
+  
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const openApkModalBtn = document.getElementById('openApkModalBtn');
+    const apkModal = document.getElementById('apkModal');
+    const closeApkModal = document.getElementById('closeApkModal');
+    const apkModalContainer = document.querySelector('.apk-modal-container');
+    
+    if (openApkModalBtn && apkModal && closeApkModal) {
+        openApkModalBtn.addEventListener('click', function() {
+            apkModal.classList.add('active');
+        });
+        closeApkModal.addEventListener('click', function() {
+            apkModal.classList.remove('active');
+        });
+        apkModal.addEventListener('click', function(e) {
+            if (e.target === apkModal) {
+                apkModal.classList.remove('active');
+            }
+        });
+    }
+    
+    document.querySelectorAll('#apkModal .apk-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+           
+            const rect = this.getBoundingClientRect();
+            const x = (rect.left + rect.right) / 2 / window.innerWidth;
+            const y = (rect.top + rect.bottom) / 2 / window.innerHeight;
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y, x },
+                colors: ['#ff6b6b', '#7d56f6', '#6c5ce7', '#a29bfe']
+            });
+        });
+    });
+});
+
+// === NOTIFIKASI STATUS SERVER ===
+document.addEventListener('DOMContentLoaded', function() {
+    const notif = document.getElementById('serverStatusNotif');
+    const notifText = document.getElementById('serverStatusNotifText');
+    
+    const statusText = document.getElementById('statusText');
+    if (notif && notifText && statusText) {
+        
+        notifText.textContent = statusText.textContent;
+        notif.classList.add('active');
+        notif.style.display = 'flex';
+        
+        setTimeout(() => {
+            notif.classList.remove('active');
+            notif.classList.add('hide');
+            setTimeout(() => {
+                notif.style.display = 'none';
+                notif.classList.remove('hide');
+            }, 600);
+        }, 8000);
+    }
+});
+
+
+function showServerStatusNotif(status, message) {
+    const notif = document.getElementById('serverStatusNotif');
+    const notifText = document.getElementById('serverStatusNotifText');
+    
+  
+    notifText.textContent = message;
+    
+ 
+    notif.style.display = 'flex';
+    notif.classList.add('active');
+    
+  
+    setTimeout(() => {
+        notif.classList.add('hide');
+        setTimeout(() => {
+            notif.style.display = 'none';
+            notif.classList.remove('active', 'hide');
+        }, 500);
+    }, 5000);
+}
+
+
+firebase.database().ref('serverStatus').on('value', (snapshot) => {
+    const serverStatus = snapshot.val() || { status: 'online', message: 'Server: Online' };
+
+    showServerStatusNotif(serverStatus.status, serverStatus.message);
+});
